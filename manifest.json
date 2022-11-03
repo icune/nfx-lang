@@ -1,0 +1,13 @@
+{
+  "manifest_version": 3,
+  "name": "NetflixSub",
+  "description": "Netflix subtitles extension",
+  "version": "1.0",
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": "netflix.png"
+  },
+  "content_scripts": {
+    "js": ["script.js"]
+  }
+}
