@@ -7,7 +7,14 @@
     "default_popup": "popup.html",
     "default_icon": "netflix.png"
   },
-  "content_scripts": {
-    "js": ["script.js"]
+  "permissions": [
+    "activeTab",
+    "scripting",
+    "tabs",
+    "background",
+    "scripting"
+  ],
+  "background": {
+    "service_worker": "background.js"
   }
 }
