@@ -1,5 +1,3 @@
-
-
 function hookNetflix() {
     if (document.netflixSubsHooked)
         return;
@@ -24,7 +22,7 @@ function hookNetflix() {
     }
 
     function observeEl(el) {
-        const config = { attributes: true};
+        const config = {attributes: true};
         const callback = (mutationList, observer) => {
             if (!controlIsDown)
                 return;
@@ -52,6 +50,7 @@ function hookNetflix() {
                 controlIsDown = false;
         });
     }
+
     let ival = setInterval(() => {
         let el = qi('[data-uia="player"]');
         if (!el)
@@ -62,8 +61,6 @@ function hookNetflix() {
         observeEl(el);
         listenToKeys();
     }, 300);
-
-
 
 
 }
