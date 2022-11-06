@@ -6,19 +6,20 @@ function hookNetflix() {
     document.netflixSubsHooked = true;
 
     let controlIsDown = false;
+    const qi = (sl) => document.querySelector(sl);
 
     function toggleSubs() {
-        let el = document.querySelector('[data-uia="control-audio-subtitle"]');
+        let el = qi('[data-uia="control-audio-subtitle"]');
         if (!el)
             return;
         el.click();
         setTimeout(() => {
             let elems = [
-                document.querySelector('[data-uia="subtitle-item-Russian"]'),
-                document.querySelector('[data-uia*="subtitle-item-English"]')
+                qi('[data-uia="subtitle-item-Russian"]'),
+                qi('[data-uia*="subtitle-item-English"]')
             ].filter(e => e);
             elems[0].click();
-            document.querySelector('[data-uia="selector-audio-subtitle"]').style.display = 'none';
+            qi('[data-uia="selector-audio-subtitle"]').style.display = 'none';
         }, 100);
     }
 
@@ -52,7 +53,7 @@ function hookNetflix() {
         });
     }
     let ival = setInterval(() => {
-        let el = document.querySelector('[data-uia="player"]');
+        let el = qi('[data-uia="player"]');
         if (!el)
             return;
         else
