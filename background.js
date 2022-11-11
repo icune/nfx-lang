@@ -1,4 +1,5 @@
 function hookNetflix() {
+    console.log("Registered");
     if (document.netflixSubsHooked)
         return;
     document.netflixSubsHooked = true;
@@ -65,24 +66,38 @@ function hookNetflix() {
 
 }
 
+async function getCurrentTab() {
+    let queryOptions = {active: true, lastFocusedWindow: true};
+    let [tab] = await chrome.tabs.query(queryOptions);
+    return tab;
+}
 
-chrome.tabs.onActivated.addListener(
-    async (a) => {
-        async function getCurrentTab() {
-            let queryOptions = {active: true, lastFocusedWindow: true};
-            let [tab] = await chrome.tabs.query(queryOptions);
-            return tab;
+function pluginEntrypoint() {
+    chrome.tabs.onActivated.addListener(
+        async (a) => {
+
+
+            let tab = await getCurrentTab();
+            console.log(tab);
+            chrome.scripting.executeScript(
+                {
+                    target: {tabId: tab.id},
+                    func: hookNetflix
+                },
+                () => {
+                    console.log("Executed");
+                });
         }
+    )
 
-        let tab = await getCurrentTab();
-        console.log(tab);
-        chrome.scripting.executeScript(
-            {
-                target: {tabId: tab.id},
-                func: hookNetflix
-            },
-            () => {
-                console.log("Executed");
-            });
-    }
-)
+
+    chrome.tabs.onUpdated.addListener(
+        async (a, chinfo) => {
+            console.log(a, chinfo);
+            let tab = await getCurrentTab();
+            console.log(tab);
+        }
+    )
+}
+
+pluginEntrypoint();
